@@ -6,12 +6,30 @@
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
-    "test": "vitest run"
+    "test": "vitest run",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx src/scripts/migrate-db.ts",
+    "db:seed": "tsx src/scripts/seed-db.ts",
+    "sentry:release": "sentry-cli releases new \"$SENTRY_RELEASE\" || true",
+    "sentry:sourcemaps:upload": "sentry-cli releases files \"$SENTRY_RELEASE\" upload-sourcemaps dist --rewrite",
+    "sentry:validate:server": "npm run build && node dist/src/scripts/validate-sentry-server.js",
+    "spend:validate": "npm run build && node dist/src/scripts/validate-spend-circuit-breakers.js"
+  },
+  "dependencies": {
+    "@clerk/backend": "^2.33.3",
+    "@sentry/browser": "^10.15.0",
+    "@sentry/node": "^10.15.0",
+    "dotenv": "^17.4.2",
+    "drizzle-orm": "^0.45.2",
+    "pg": "^8.20.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.26.0",
+    "@sentry/cli": "^2.57.0",
     "@types/node": "^22.15.13",
+    "drizzle-kit": "^0.31.10",
     "eslint": "^9.26.0",
+    "tsx": "^4.21.0",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.31.1",
     "vitest": "^3.1.2"
