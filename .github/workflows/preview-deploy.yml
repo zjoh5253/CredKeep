@@ -3,6 +3,13 @@ name: Preview Deploy
 on:
   pull_request:
 
+concurrency:
+  group: preview-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
 jobs:
   deploy-preview:
     runs-on: ubuntu-latest
